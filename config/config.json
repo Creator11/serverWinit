@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "winitadmin",
+    "password": "randompass123321",
+    "database": "winit",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "winitadmin",
+    "password": "randompass123321",
+    "database": "winit",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "winitadmin",
+    "password": "randompass123321",
+    "database": "winit",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
