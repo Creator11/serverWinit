@@ -76,6 +76,7 @@ class UserController {
         console.log('ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! :', req.cookies);
         if (!refreshToken) {
             console.error('Refresh token not found in cookies');
+            console.log('ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! :', req.cookies);
             return next(ApiError.BadRequest('Refresh token not found'));
         }
 
@@ -84,9 +85,9 @@ class UserController {
 
         res.cookie('refreshToken', userData.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
-    httpOnly: false, // Установите на false, если нужно, чтобы JavaScript мог читать cookies
-    secure: false, // Установите на true, если работаете по HTTPS
-    sameSite: 'None' // Или 'Lax' в зависимости от вашей конфигурации
+    httpOnly: false,  
+    secure: false,  
+    sameSite: 'None' 
 });
         return res.json(userData);
     } catch (error) {
@@ -103,7 +104,7 @@ class UserController {
                 return res.status(404).json({ message: 'Пользователь не найден' });
             }
 
-            // Удаление старого аватара, если он существует
+            
             if (user.avatar) {
                 const oldAvatarPath = path.join(__dirname, '../', user.avatar);
                 if (fs.existsSync(oldAvatarPath)) {
@@ -143,7 +144,7 @@ class UserController {
 
     async addCoins(req, res) {
         try {
-            console.log('User in addCoins:', req.user); // Логируем req.user
+            console.log('User in addCoins:', req.user);  
             const { amount } = req.body;
             const userId = req.user.id;  
 
@@ -195,9 +196,9 @@ class UserController {
     }
     async addStars(req, res) {
         try {
-            console.log('User in addStars:', req.user); // Логируем req.user
+            console.log('User in addStars:', req.user);  
             const { amount } = req.body;
-            const userId = req.user.id; // предполагается, что пользователь установлен в req.user
+            const userId = req.user.id;  
 
             if (!userId || typeof amount !== 'number' || amount <= 0) {
                 return res.status(400).json({ message: 'Invalid input' });
