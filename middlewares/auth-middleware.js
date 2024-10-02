@@ -14,12 +14,13 @@ module.exports = function (req, res, next) { // Исправлено err на re
         }
 
         const userData = tokenService.validateAccessToken(accessToken);
+        console.log('Decoded User Data:', userData);
         if (!userData) {
             return res.status(401).json({ message: 'Invalid token' });
         }
 
         req.user = userData;
-        console.log('User Data:', req.user); // Логируем req.user
+        console.log('true login - User Data:', req.user);
         next();
     } catch (err) {
         return next(ApiError.UnauthorizedError());
