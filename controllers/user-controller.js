@@ -17,7 +17,12 @@ class UserController {
             }
             const { email,nickName, password } = req.body;
             const userData = await userService.registration(email,nickName, password);
-            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('refreshToken', userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000, 
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', 
+                sameSite: 'None' 
+            });
 
             return res.json(userData);
         } catch (error) {
@@ -29,7 +34,12 @@ class UserController {
         try {
             const { email, password } = req.body;
             const userData = await userService.login(email, password);
-            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+            res.cookie('refreshToken', userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000, 
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', 
+                sameSite: 'None' 
+            });
             return res.json(userData);
         } catch (error) {
             next(error);
@@ -60,25 +70,30 @@ class UserController {
         }
     }
 
-    async refresh(req, res, next) {
-        try {
-            const { refreshToken } = req.cookies;
-            console.log('Refresh token from cookies:', refreshToken);
-            if (!refreshToken) {
-                console.error('Refresh token not found in cookies');
-                return next(ApiError.BadRequest('Refresh token not found'));
-            }
-
-            const userData = await userService.refresh(refreshToken);
-            console.log('User data after refresh:', userData);
-
-            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
-            return res.json(userData);
-        } catch (error) {
-            console.error('Error in refresh method:', error.message);
-            next(error);
+  async refresh(req, res, next) {
+    try {
+        const { refreshToken } = req.cookies;
+        console.log('Cookies:', req.cookies);
+        if (!refreshToken) {
+            console.error('Refresh token not found in cookies');
+            return next(ApiError.BadRequest('Refresh token not found'));
         }
+
+        const userData = await userService.refresh(refreshToken);
+        console.log('User data after refresh:', userData);
+
+        res.cookie('refreshToken', userData.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000, 
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'None' 
+        });
+        return res.json(userData);
+    } catch (error) {
+        console.error('Error in refresh method:', error.message);
+        next(error);
     }
+}
     async uploadAvatar(req, res, next) {
         try {
             const userId = req.user.id;
