@@ -17,13 +17,12 @@ class UserController {
             }
             const { email,nickName, password } = req.body;
             const userData = await userService.registration(email,nickName, password);
-                
-        res.cookie('refreshToken', userData.refreshToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            secure: false,
-            sameSite: 'Lax'
-        });
+            res.cookie('refreshToken', userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
+                httpOnly: false, // Установите на false, если нужно, чтобы JavaScript мог читать cookies
+                secure: false, // Установите на true, если работаете по HTTPS
+                sameSite: 'None' // Или 'Lax' в зависимости от вашей конфигурации
+            });
 
             return res.json(userData);
         } catch (error) {
@@ -35,12 +34,11 @@ class UserController {
         try {
             const { email, password } = req.body;
             const userData = await userService.login(email, password);
-             
             res.cookie('refreshToken', userData.refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                secure: false,
-                sameSite: 'Lax'
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
+                httpOnly: false, // Установите на false, если нужно, чтобы JavaScript мог читать cookies
+                secure: false, // Установите на true, если работаете по HTTPS
+                sameSite: 'None' // Или 'Lax' в зависимости от вашей конфигурации
             });
             return res.json(userData);
         } catch (error) {
@@ -84,13 +82,12 @@ class UserController {
         const userData = await userService.refresh(refreshToken);
         console.log('User data after refresh:', userData);
 
-          
         res.cookie('refreshToken', userData.refreshToken, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-            httpOnly: true,
-            secure: false,
-            sameSite: 'Lax'
-        });
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
+    httpOnly: false, // Установите на false, если нужно, чтобы JavaScript мог читать cookies
+    secure: false, // Установите на true, если работаете по HTTPS
+    sameSite: 'None' // Или 'Lax' в зависимости от вашей конфигурации
+});
         return res.json(userData);
     } catch (error) {
         console.error('Error in refresh method:', error.message);
