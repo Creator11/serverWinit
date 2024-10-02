@@ -73,7 +73,7 @@ class UserController {
   async refresh(req, res, next) {
     try {
         const { refreshToken } = req.cookies;
-        console.log('Cookies:', req.cookies);
+        console.log('ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! :', req.cookies);
         if (!refreshToken) {
             console.error('Refresh token not found in cookies');
             return next(ApiError.BadRequest('Refresh token not found'));
