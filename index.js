@@ -29,10 +29,10 @@ app.use(errorMiddleware);
 
 app.get('/test-db', async (req, res) => {
     try {
-        const users = await User.findAll();  // Пример запроса к базе данных
-        res.json(users);
+        // const users = await User.findAll();  // Пример запроса к базе данных
+        // res.json(users);
         res.status(200).send('успешное подключение');
-        console.log("console.log")
+        console.log("тест")
     } catch (err) {
         console.error(err);
         res.status(500).send('Ошибка подключения к базе данных');
