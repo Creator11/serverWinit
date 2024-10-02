@@ -20,7 +20,7 @@ class UserController {
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
                 httpOnly: false, // Установите на false, если нужно, чтобы JavaScript мог читать cookies
-                secure: false, // Установите на true, если работаете по HTTPS
+                secure: true, // Установите на true, если работаете по HTTPS
                 sameSite: 'None' // Или 'Lax' в зависимости от вашей конфигурации
             });
 
@@ -37,7 +37,7 @@ class UserController {
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
                 httpOnly: false, // Установите на false, если нужно, чтобы JavaScript мог читать cookies
-                secure: false, // Установите на true, если работаете по HTTPS
+                secure: true, // Установите на true, если работаете по HTTPS
                 sameSite: 'None' // Или 'Lax' в зависимости от вашей конфигурации
             });
             return res.json(userData);
@@ -86,7 +86,7 @@ class UserController {
         res.cookie('refreshToken', userData.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
     httpOnly: false,  
-    secure: false,  
+    secure: true,  
     sameSite: 'None' 
 });
         return res.json(userData);
