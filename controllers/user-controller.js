@@ -19,7 +19,7 @@ class UserController {
             const userData = await userService.registration(email,nickName, password);
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000, 
-                httpOnly: true,
+                httpOnly: false,
                 secure: process.env.NODE_ENV === 'production', 
                 sameSite: 'None' 
             });
@@ -36,7 +36,7 @@ class UserController {
             const userData = await userService.login(email, password);
             res.cookie('refreshToken', userData.refreshToken, {
                 maxAge: 30 * 24 * 60 * 60 * 1000, 
-                httpOnly: true,
+                httpOnly: false,
                 secure: process.env.NODE_ENV === 'production', 
                 sameSite: 'None' 
             });
@@ -84,7 +84,7 @@ class UserController {
 
         res.cookie('refreshToken', userData.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000, 
-            httpOnly: true,
+            httpOnly: false,
             secure: process.env.NODE_ENV === 'production', 
             sameSite: 'None' 
         });
