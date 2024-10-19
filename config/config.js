@@ -1,4 +1,4 @@
 module.exports = {
-    AVATAR_PLACEHOLDER_PATH: 'uploads/avatarPlaceholder.png',
+    AVATAR_PLACEHOLDER_PATH: 'uploads/avatars/avatarPlaceholder.png',
     // другие конфигурации
 };
