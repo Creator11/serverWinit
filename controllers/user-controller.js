@@ -70,7 +70,7 @@ class UserController {
         }
     }
 
-  async refresh(req, res, next) {
+    async refresh(req, res, next) {
     try {
         const { refreshToken } = req.cookies;
         console.log('ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! ALARM COOKIE!!! :', req.cookies);
@@ -94,7 +94,7 @@ class UserController {
         console.error('Error in refresh method:', error.message);
         next(error);
     }
-}
+   }
     async uploadAvatar(req, res, next) {
         try {
             const userId = req.user.id;
@@ -124,23 +124,27 @@ class UserController {
     }
     async getAvatar(req, res, next) {
         try {
-            const userId = req.user.id;
+            
+            const userId = req.params.id || req.user.id;
             const user = await userService.getUser(userId);
-
+    
             if (!user || !user.avatar) {
                 return res.status(404).json({ message: 'Аватар не найден' });
             }
-
+    
             const avatarPath = path.join(__dirname, '../', user.avatar);
+    
             if (!fs.existsSync(avatarPath)) {
                 return res.status(404).json({ message: 'Файл аватара не найден' });
             }
-
+    
             return res.sendFile(avatarPath);
         } catch (error) {
             next(error);
         }
     }
+
+    
 
     async addCoins(req, res) {
         try {
@@ -185,6 +189,16 @@ class UserController {
     }
 
 
+    async removeStars(req, res, next) {
+        try {
+            const { amount } = req.body;
+            const userId = req.user.id; // Получаем id пользователя из авторизации
+            const user = await userService.removeStars(userId, amount);
+            return res.json(user);
+        } catch (error) {
+            next(error);
+        }
+    }
     async getStars(req, res, next) {
         try {
             const userId = req.user.id; 
@@ -308,6 +322,16 @@ class UserController {
             res.status(500).json({ message: 'Server error' });
         }
     };
+    async removeLevel(req, res, next) {
+        try {
+            const { amount } = req.body;
+            const userId = req.user.id; 
+            const user = await userService.removeLevel(userId, amount);
+            return res.json(user);
+        } catch (error) {
+            next(error);
+        }
+    }
 
 
     async getUser(req, res, next) {

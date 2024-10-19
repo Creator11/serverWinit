@@ -26,11 +26,13 @@ router.post('/upload-avatar', authMiddleware, upload.single('image'), userContro
 router.post('/coins/add', authMiddleware, body('amount').isInt({ min: 1 }), userController.addCoins);
 router.post('/coins/remove', authMiddleware, body('amount').isInt({ min: 1 }), userController.removeCoins);
 router.post('/stars/add', authMiddleware,body('amount').isInt({ min: 1 }), userController.addStars);
+router.post('/stars/remove', authMiddleware, body('amount').isInt({ min: 1 }), userController.removeStars);
 router.post('/level/add', authMiddleware,body('amount').isInt({ min: 1 }), userController.addLevel);
+router.post('/level/remove', authMiddleware,body('amount').isInt({ min: 1 }), userController.removeLevel);
 router.post('/streak/add', authMiddleware,body('amount').isInt({ min: 1 }), userController.addStreak);
 router.post('/complete-task/add', authMiddleware, body('taskId').isInt({ min: 1 }),userController.addCompleteTask);
 
-router.get('/avatar', authMiddleware, userController.getAvatar);
+router.get('/avatar/:id?', authMiddleware, userController.getAvatar);
 
 router.get('/coins', authMiddleware, userController.getCoins);
 router.get('/stars', authMiddleware, userController.getStars);

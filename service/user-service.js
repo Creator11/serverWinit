@@ -136,6 +136,43 @@ class UserService {
         }
     }
 
+    async removeLevel(userId, amount) {
+        try {
+            const user = await UserModel.findByPk(userId);
+            if (!user) {
+                throw new Error('Пользователь не найден');
+            }
+            if (user.stars < amount) {
+                throw new Error('Недостаточно монет');
+            }
+            user.level -= amount;
+            await user.save();
+            return user;
+        } catch (error) {
+            console.error("Ошибка при списании монет:", error);
+            throw error;
+        }
+    }
+
+
+    async removeStars(userId, amount) {
+        try {
+            const user = await UserModel.findByPk(userId);
+            if (!user) {
+                throw new Error('Пользователь не найден');
+            }
+            if (user.stars < amount) {
+                throw new Error('Недостаточно монет');
+            }
+            user.stars -= amount;
+            await user.save();
+            return user;
+        } catch (error) {
+            console.error("Ошибка при списании монет:", error);
+            throw error;
+        }
+    }
+
 
     async getCoins(userId) {
         const coins = await UserModel.findByPk(userId);
