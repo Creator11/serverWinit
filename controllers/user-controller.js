@@ -124,20 +124,19 @@ class UserController {
     }
     async getAvatar(req, res, next) {
         try {
-            
             const userId = req.params.id || req.user.id;
             const user = await userService.getUser(userId);
-    
+
             if (!user || !user.avatar) {
                 return res.status(404).json({ message: 'Аватар не найден' });
             }
-    
+
             const avatarPath = path.join(__dirname, '../', user.avatar);
-    
+
             if (!fs.existsSync(avatarPath)) {
                 return res.status(404).json({ message: 'Файл аватара не найден' });
             }
-    
+
             return res.sendFile(avatarPath);
         } catch (error) {
             next(error);
