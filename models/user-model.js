@@ -53,8 +53,7 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: true
     }
-}, {
-    // Дополнительные настройки модели
+}, { 
     timestamps: true,
     tableName: 'Users'
 });

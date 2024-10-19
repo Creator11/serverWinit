@@ -32,7 +32,7 @@ router.post('/level/remove', authMiddleware,body('amount').isInt({ min: 1 }), us
 router.post('/streak/add', authMiddleware,body('amount').isInt({ min: 1 }), userController.addStreak);
 router.post('/complete-task/add', authMiddleware, body('taskId').isInt({ min: 1 }),userController.addCompleteTask);
 
-router.get('/avatar/:id?', authMiddleware, userController.getAvatar);
+router.get('/avatar/:id', authMiddleware, userController.getAvatar);
 
 router.get('/coins', authMiddleware, userController.getCoins);
 router.get('/stars', authMiddleware, userController.getStars);
