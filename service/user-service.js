@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const MailService = require('./mail-service');
 const TokenService = require('./token-service'); // Исправлено название импорта
 const UserDto = require("../dtos/user-dto");
+const config = require('../config/config');
 
 class UserService {
     async registration(email,nickName, password) {
@@ -16,7 +17,13 @@ class UserService {
 
             const hashPassword = await bcrypt.hash(password, 10);
             const activationLink = uuid.v4();
-            const user = await UserModel.create({ email, nickName, password: hashPassword, activationLink });
+            const user = await UserModel.create({ 
+                email, 
+                nickName, 
+                password: hashPassword, 
+                activationLink,
+                avatar: config.AVATAR_PLACEHOLDER_PATH // Установите аватар по умолчанию
+            });
 
             await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
 
@@ -142,7 +149,7 @@ class UserService {
             if (!user) {
                 throw new Error('Пользователь не найден');
             }
-            if (user.stars < amount) {
+            if (user.level < amount) {
                 throw new Error('Недостаточно монет');
             }
             user.level -= amount;
