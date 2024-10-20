@@ -21,7 +21,7 @@ class UserService {
                 nickName, 
                 password: hashPassword, 
                 activationLink,
-                avatar: 'uploads/avatars/avatarPlaceholder.png' // Установите аватар по умолчанию
+                avatar: 'uploads/avatars/7171ef3a75eb51ed4c98d9a6575897c7' // Установите аватар по умолчанию
             });
 
             await MailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`);
